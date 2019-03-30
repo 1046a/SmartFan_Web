@@ -29,9 +29,8 @@ class Fan {
             this.client = client
         })
         smartfan.set_iter(5);
-        smartfan.set_idleness(10);
+        smartfan.set_idleness(60);
         smartfan.set_theta(Math.PI / 4.0);
-        //console.log(`smartfan: ${smartfan.power_up()}`);
     }
 
     getjson() {
