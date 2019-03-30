@@ -5,6 +5,13 @@ const Fan = require('./fan');
 
 const fan = new Fan();
 
+function parse(val) {
+    if (typeof val === "number") {
+        return val;
+    }
+    return parseInt(val, 10);
+}
+
 router.get('/', async ctx => {
     ctx.body = 'Hello World';
 });
@@ -15,11 +22,13 @@ router.get('/status', async ctx => {
 });
 
 router.put('/power', async ctx => {
-    if (!ctx.request.body['power']) {
+    debug(ctx.request.body);
+    if (ctx.request.body['power'] === undefined) {
         ctx.throw(Boom.badRequest());
     }
 
-    let val = parseInt(ctx.request.body['power'], 10);
+
+    let val = parse(ctx.request.body['power']);
     if (isNaN(val)) {
         ctx.throw(Boom.badRequest());
     }
@@ -29,11 +38,12 @@ router.put('/power', async ctx => {
 });
 
 router.put('/mode', async ctx => {
-    if (!ctx.request.body['mode']) {
+    debug(ctx.request.body);
+    if (ctx.request.body['mode'] === undefined) {
         ctx.throw(Boom.badRequest());
     }
 
-    let val = parseInt(ctx.request.body['mode'], 10);
+    let val = parse(ctx.request.body['mode']);
     if (isNaN(val)) {
         ctx.throw(Boom.badRequest());
     }
@@ -43,11 +53,12 @@ router.put('/mode', async ctx => {
 });
 
 router.put('/rpm', async ctx => {
-    if (!ctx.request.body['rpm']) {
+    debug(ctx.request.body);
+    if (ctx.request.body['rpm'] === undefined) {
         ctx.throw(Boom.badRequest());
     }
 
-    let val = parseInt(ctx.request.body['rpm'], 10);
+    let val = parse(ctx.request.body['rpm']);
     if (isNaN(val)) {
         ctx.throw(Boom.badRequest());
     }
