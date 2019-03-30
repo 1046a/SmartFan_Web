@@ -1,0 +1,32 @@
+{
+  "name": "smartfan_web",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "DEBUG=SmartFan_Web:* node app.js",
+    "pm2": "pm2 start app.js --name \"SmartFan_Web\"",
+    "nodemon": "DEBUG=SmartFan_Web:* nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leo1003/SmartFan_Web.git"
+  },
+  "author": "Leo Chen",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Leo1003/SmartFan_Web/issues"
+  },
+  "homepage": "https://github.com/Leo1003/SmartFan_Web#readme",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "debug": "^4.1.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
+    "koa-onerror": "^4.1.0",
+    "koa-static": "^5.0.0"
+  }
+}
