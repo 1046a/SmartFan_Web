@@ -17,6 +17,40 @@ const smartfan = ffi.Library(__dirname + '/libsmartfan', {
     'set_theta': ['void', ['double']],
 })
 
+function fan_off() {
+    port.write('o', 'ascii', (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        debug("Fan off");
+    });
+}
+
+function fan_on() {
+    port.write('n', 'ascii', (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        debug("Fan on");
+    });
+}
+
+function fan_rotote(angle) {
+    let data = '0';
+    if (angle < 0) {
+        data = '-';
+    }
+    if (angle > 0) {
+        data = '+';
+    }
+    port.write(data, 'ascii', (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        debug(`Fan rotate: ${angle} degree`);
+    });
+}
+
 class Fan {
     constructor() {
         this.power = false;
@@ -27,7 +61,7 @@ class Fan {
             _this._detect_loop();
         });
         this.refresh();
-        smartfan.set_iter(5);
+        smartfan.set_iter(10);
         smartfan.set_idleness(60);
         smartfan.set_theta(Math.PI / 4.0);
     }
@@ -53,10 +87,10 @@ class Fan {
             } else {
                 debug(`smartfan power_off(): ${smartfan.power_off()}`);
                 this.running = false;
+                fan_off();
             }
 
             console.log(`Power Value: ${this.power}`)
-
         }
     }
 
@@ -98,12 +132,16 @@ class Fan {
         let status = smartfan.state(outTheta);
         debug(`status: ${status}`);
         if (status == 0) {
-            //fan off
+            fan_off();
         } else if (status == 1) {
-            //fan on
+            fan_on();
         } else if (status == 2) {
             let theta = outTheta.deref();
             debug(`theta: ${theta}`);
+            let angle = Math.round(theta * 2 * Math.PI);
+            if (Math.abs(angle) >= 5) {
+                fan_rotote(angle);
+            }
         } else if (status == 3) {
             //nothing
         }
