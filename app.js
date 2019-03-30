@@ -24,6 +24,7 @@ app.use(cors());
 app.use(bodyparser());
 app.use(json());
 app.use(serve(__dirname + '/public'));
+app.use(serve(__dirname + '/semantic/dist'))
 
 app.use(router.routes());
 app.use(router.allowedMethods());

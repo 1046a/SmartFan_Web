@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/homepage.css">
+    <title>Smart Fan Control Panel</title>
+</head>
+<body class="pushable vsc-initialized">
+    <div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui text container">
+                <h1 class="ui inverted header">Smart Fan Control Panel</h1>
+                <h2>Control your smart fan from this page</h2>
+            </div>
+        </div>
+        <div class="ui strip vertical segment">
+            <div class="ui middle aligned stackable vertically divided centered grid container">
+                <div class="center aligned row">
+                    <div class="twelve wide center aligned column">
+                        <div class="ui segment">
+                            <h1 class="ui header"><i class="power off huge icon"></i>Power</h1>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="power" id="fan-power">
+                                <label>Power On</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center aligned row">
+                    <div class="twelve wide center aligned column">
+                        <div class="ui segment">
+                            <div class="ui two column stackable very relaxed grid">
+                                <div class="column">
+                                    <h1 class="ui header"><i class="list ui huge icon"></i>Mode</h1>
+                                    <div class="ui fluid selection dropdown" id="fan-mode">
+                                        <i class="dropdown icon"></i>
+                                        <div class="text"></div>
+                                        <div class="menu">
+                                            <div class="item">Auto</div>
+                                            <div class="item">Remote</div>
+                                            <div class="item">Detect</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <h1 class="ui header"><i class="sync alternate huge icon"></i>Speed</h1>
+                                    <div class="three ui buttons">
+                                        <button class="teal basic ui button" id="fan-speed-low">Low</button>
+                                        <button class="green basic ui button" id="fan-speed-med">Medium</button>
+                                        <button class="red basic ui button" id="fan-speed-high">High</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui vertical divider">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="semantic.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.ui.dropdown').dropdown();
+        });
+    </script>
+</body>
+</html>

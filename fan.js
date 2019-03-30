@@ -19,21 +19,21 @@ class Fan {
     }
 
     setPower(value) {
-        if (value instanceof Boolean) {
+        if (typeof value === "boolean") {
             this.power = value;
             //TODO: Do some stuff
         }
     }
 
     setMode(value) {
-        if (value instanceof Number) {
+        if (typeof value === "number") {
             this.mode = value;
             //TODO: Do some stuff
         }
     }
 
     setRPM(value) {
-        if (value instanceof Number) {
+        if (typeof value === "number") {
             this.rpm = value;
             //TODO: Do some stuff
         }
