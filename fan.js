@@ -1,3 +1,6 @@
+const gpio = require('rpi-gpio');
+const gpiop = gpio.promise;
+
 class Fan {
     constructor() {
         this.power = false;
