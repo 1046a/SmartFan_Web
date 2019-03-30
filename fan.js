@@ -1,5 +1,8 @@
+const SerialPort = require('serialport');
 const ffi = require('ffi');
 const debug = require('debug')('SmartFan_Web:fan');
+
+const port = new SerialPort('/dev/ttyACM0', { baudRate: 115200 });
 
 const smartfan = ffi.Library(__dirname + '/libsmartfan', {
     'power_up': ['bool', []],
