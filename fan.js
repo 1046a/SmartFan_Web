@@ -90,7 +90,7 @@ class Fan {
             return;
         }
         this.running = true;
-        this.task.every(3000);
+        this.task.every(1000);
     }
 
     _stop_loop() {
