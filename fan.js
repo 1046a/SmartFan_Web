@@ -109,7 +109,8 @@ class Fan {
         } else if (status == 1) {
             //fan on
         } else if (status == 2) {
-            //rotate
+            let theta = outTheta.deref();
+            debug(`theta: ${theta}`);
         } else if (status == 3) {
             //nothing
         }
