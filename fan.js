@@ -8,15 +8,11 @@ const smartfan = ffi.Library(__dirname + '/libsmartfan', {
 })
 
 class Fan {
-    constructor(client) {
+    constructor() {
         this.power = false;
         this.mode = 0;
         this.rpm = 0;
         this.refresh();
-        client.on('connect', () => {
-            this.client = client
-        })
-        //console.log(`smartfan: ${smartfan.power_up()}`);
     }
 
     getjson() {
@@ -42,8 +38,7 @@ class Fan {
             }
 
             console.log(`Power Value: ${this.power}`)
-            if (this.client) this.client.publish('fan/power', (this.power ? 1 : 0).toString())
-            else console.log("mqtt is not ready")
+
         }
     }
 
@@ -52,8 +47,6 @@ class Fan {
             this.mode = value; // 0 1 2
             //TODO: Do some stuff
             console.log(`Mode: ${this.mode}`)
-            if (this.client) this.client.publish('fan/mode', this.mode.toString())
-            else console.log("mqtt is not ready")
         }
     }
 
@@ -62,8 +55,6 @@ class Fan {
             this.rpm = value; // mode of rpm, 0 1 2
             //TODO: Do some stuff
             console.log(`Mode of RPM: ${this.rpm}`)
-            if (this.client) this.client.publish('fan/rpm', this.rpm.toString())
-            else console.log("mqtt is not ready")
         }
     }
 }

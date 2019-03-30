@@ -2,11 +2,8 @@ const router = require('koa-router')();
 const debug = require('debug')('SmartFan_Web:router');
 const Boom = require('boom');
 const Fan = require('./fan');
-const mqtt  = require('mqtt');
 
-let mqClient = mqtt.connect('mqtt://192.168.0.1', {host: 'localhost', port: 1883})
-
-const fan = new Fan(mqClient);
+const fan = new Fan();
 
 function parse(val) {
     if (typeof val === "number") {
