@@ -1,3 +1,12 @@
+const ffi = require('ffi');
+const debug = require('debug')('SmartFan_Web:fan');
+
+const smartfan = ffi.Library(__dirname + '/libsmartfan', {
+    'power_up': ['bool', []],
+    'power_off': ['bool', []],
+    'detect': ['int', ['int']],
+})
+
 class Fan {
     constructor(client) {
         this.power = false;
@@ -7,6 +16,7 @@ class Fan {
         client.on('connect', () => {
             this.client = client
         })
+        //console.log(`smartfan: ${smartfan.power_up()}`);
     }
 
     getjson() {
@@ -24,14 +34,20 @@ class Fan {
     setPower(value) { // on off
         if (typeof value === "boolean") {
             this.power = value; // true false
-            //TODO: Do some stuff
+
+            if (this.power) {
+                debug(`smartfan power_up(): ${smartfan.power_up()}`);
+            } else {
+                debug(`smartfan power_off(): ${smartfan.power_off()}`);
+            }
+
             console.log(`Power Value: ${this.power}`)
             if (this.client) this.client.publish('fan/power', (this.power ? 1 : 0).toString())
             else console.log("mqtt is not ready")
         }
     }
 
-    setMode(value) { // set 
+    setMode(value) { // set
         if (typeof value === "number") {
             this.mode = value; // 0 1 2
             //TODO: Do some stuff
