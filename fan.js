@@ -57,6 +57,7 @@ class Fan {
         this.mode = 0;
         this.rpm = 0;
         this.running = false;
+        var _this = this;
         this.task = repeat().do(() => {
             _this._detect_loop();
         });
