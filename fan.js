@@ -1,9 +1,12 @@
+const SerialPort = require('serialport');
 const ffi = require('ffi');
 const ref = require('ref');
 const debug = require('debug')('SmartFan_Web:fan');
 const repeat = require('repeat').default;
 
 const doublePtr = ref.refType('double');
+
+const port = new SerialPort('/dev/ttyUSB0', { baudRate: 9600 });
 
 const smartfan = ffi.Library(__dirname + '/libsmartfan', {
     'power_up': ['bool', []],
@@ -15,8 +18,7 @@ const smartfan = ffi.Library(__dirname + '/libsmartfan', {
 })
 
 class Fan {
-    constructor(client) {
-        var _this = this;
+    constructor() {
         this.power = false;
         this.mode = 0;
         this.rpm = 0;
@@ -25,9 +27,6 @@ class Fan {
             _this._detect_loop();
         });
         this.refresh();
-        client.on('connect', () => {
-            this.client = client
-        })
         smartfan.set_iter(5);
         smartfan.set_idleness(60);
         smartfan.set_theta(Math.PI / 4.0);
@@ -57,8 +56,7 @@ class Fan {
             }
 
             console.log(`Power Value: ${this.power}`)
-            if (this.client) this.client.publish('fan/power', (this.power ? 1 : 0).toString())
-            else console.log("mqtt is not ready")
+
         }
     }
 
@@ -67,8 +65,6 @@ class Fan {
             this.mode = value; // 0 1 2
             //TODO: Do some stuff
             console.log(`Mode: ${this.mode}`)
-            if (this.client) this.client.publish('fan/mode', this.mode.toString())
-            else console.log("mqtt is not ready")
         }
     }
 
@@ -77,8 +73,6 @@ class Fan {
             this.rpm = value; // mode of rpm, 0 1 2
             //TODO: Do some stuff
             console.log(`Mode of RPM: ${this.rpm}`)
-            if (this.client) this.client.publish('fan/rpm', this.rpm.toString())
-            else console.log("mqtt is not ready")
         }
     }
 
