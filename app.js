@@ -8,6 +8,12 @@ const json = require('koa-json');
 const serve = require('koa-static');
 const debug = require('debug')('SmartFan_Web:app');
 
+// Routers
+const router = require('./router');
+
+// Server port settings
+const port = 3000;
+
 // Error Handler
 onerror(app);
 
@@ -18,8 +24,7 @@ app.use(bodyparser());
 app.use(json());
 app.use(serve(__dirname + '/public'));
 
-app.use(async ctx => {
-    ctx.body = 'Hello World';
-});
+app.use(router.routes(), router.allowedMethods());
 
-app.listen(3000);
+app.listen(port);
+debug(`Web server started at port: ${port}!`);
