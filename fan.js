@@ -74,7 +74,7 @@ function fan_rotote(angle) {
 class Fan {
     constructor() {
         this.power = false;
-        this.mode = 0;
+        this.mode = 2;
         this.rpm = 0;
         this.running = false;
         this.fanning = false;
