@@ -36,20 +36,22 @@ function fan_on() {
 }
 
 function fan_top_rot_on() {
+    debug("Requesting Top on...");
     port.write('a', 'ascii', (err) => {
         if (err) {
             return console.error(err);
         }
-        debug("Top off");
+        debug("Top on");
     });
 }
 
 function fan_top_rot_off() {
+    debug("Requesting Top off...");
     port.write('m', 'ascii', (err) => {
         if (err) {
             return console.error(err);
         }
-        debug("Top on");
+        debug("Top off");
     });
 }
 
