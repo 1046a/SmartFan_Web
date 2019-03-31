@@ -86,8 +86,7 @@ class Fan {
             if (this.power) {
                 this._start_loop();
             } else {
-                debug(`smartfan power_off(): ${smartfan.power_off()}`);
-                this.running = false;
+                this._stop_loop();
                 fan_off();
             }
 
