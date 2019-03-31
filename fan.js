@@ -35,6 +35,24 @@ function fan_on() {
     });
 }
 
+function fan_top_rot_on() {
+    port.write('a', 'ascii', (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        debug("Top off");
+    });
+}
+
+function fan_top_rot_off() {
+    port.write('m', 'ascii', (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        debug("Top on");
+    });
+}
+
 function fan_rotote(angle) {
     let data = '0';
     if (angle < 0) {
@@ -57,6 +75,7 @@ class Fan {
         this.mode = 0;
         this.rpm = 0;
         this.running = false;
+        this.fanning = false;
         var _this = this;
         this.task = repeat().do(() => {
             _this._detect_loop();
@@ -87,7 +106,6 @@ class Fan {
                 this._start_loop();
             } else {
                 this._stop_loop();
-                fan_off();
             }
 
             console.log(`Power Value: ${this.power}`)
@@ -97,7 +115,13 @@ class Fan {
     setMode(value) { // set
         if (typeof value === "number") {
             this.mode = value; // 0 1 2
-            //TODO: Do some stuff
+            if (this.fanning) {
+                if (this.mode == 0) {
+                    fan_top_rot_on();
+                } else if (this.mode == 2) {
+                    fan_top_rot_off();
+                }
+            }
             console.log(`Mode: ${this.mode}`)
         }
     }
@@ -123,6 +147,9 @@ class Fan {
     _stop_loop() {
         debug(`smartfan power_off(): ${smartfan.power_off()}`);
         this.running = false;
+        this.fanning = false;
+        fan_off();
+        fan_top_rot_off();
         this.task.cancel();
     }
 
@@ -133,8 +160,16 @@ class Fan {
         debug(`status: ${status}`);
         if (status == 0) {
             fan_off();
+            fan_top_rot_off();
+            this.fanning = false;
         } else if (status == 1) {
             fan_on();
+            this.fanning = true;
+            if (this.mode == 0) {
+                fan_top_rot_on();
+            } else if (this.mode == 2) {
+                fan_top_rot_off();
+            }
         } else if (status == 2) {
             let theta = outTheta.deref();
             debug(`theta: ${theta}`);
