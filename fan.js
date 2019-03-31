@@ -139,7 +139,8 @@ class Fan {
         } else if (status == 2) {
             let theta = outTheta.deref();
             debug(`theta: ${theta}`);
-            let angle = Math.round(theta * 2 * Math.PI);
+            let angle = Math.round(theta * 180 / Math.PI);
+            debug(`Angle: ${angle}`);
             if (Math.abs(angle) >= 5) {
                 fan_rotote(angle);
             }
