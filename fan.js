@@ -166,13 +166,22 @@ class Fan {
             this.fanning = false;
         } else if (status == 1) {
             fan_on();
-            this.fanning = true;
             if (this.mode == 0) {
                 fan_top_rot_on();
             } else if (this.mode == 2) {
                 fan_top_rot_off();
             }
+            this.fanning = true;
         } else if (status == 2) {
+            if (!this.fanning) {
+                fan_on();
+                if (this.mode == 0) {
+                    fan_top_rot_on();
+                } else if (this.mode == 2) {
+                    fan_top_rot_off();
+                }
+            }
+
             let theta = outTheta.deref();
             debug(`theta: ${theta}`);
             let angle = Math.round(theta * 180 / Math.PI);
