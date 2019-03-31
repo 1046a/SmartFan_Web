@@ -182,12 +182,16 @@ class Fan {
                 }
             }
 
-            let theta = outTheta.deref();
-            debug(`theta: ${theta}`);
-            let angle = Math.round(theta * 180 / Math.PI);
-            debug(`Angle: ${angle}`);
-            if (Math.abs(angle) >= 5) {
-                fan_rotote(angle);
+            if (this.mode == 2) {
+                let theta = outTheta.deref();
+                debug(`theta: ${theta}`);
+                let angle = Math.round(theta * 180 / Math.PI);
+                debug(`Angle: ${angle}`);
+                if (Math.abs(angle) >= 5) {
+                    fan_rotote(angle);
+                }
+            } else {
+                debug("Not in detect mode");
             }
         } else if (status == 3) {
             //nothing
